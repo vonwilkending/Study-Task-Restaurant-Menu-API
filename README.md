@@ -1,4 +1,4 @@
-# Restaurant-Menu-API
+# Study Task: Restaurant-Menu-API
 
 Viele Restaurants bieten ihre Speisekarten im Internet zur Einsicht an. Diese Karten sind häufig
 als PDF aber auch in Form normaler Webseiten einsehbar. Aggregatoren wie bspw. pizza.de
