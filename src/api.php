@@ -45,24 +45,25 @@ $app->get('/api/food/{filter}', function(Request $request, Response $response, a
 
             //create sql string 
             if($filter == 'suppe' || $filter == 'brot' || $filter == 'steak'){
-                $sql = "SELECT f.name as food,f.ingredients,f.price, r.name as restaurant 
+                $sql = $db->prepare("SELECT f.name as food,f.ingredients,f.price, r.name as restaurant
                     FROM food f JOIN restaurants r ON restID = r.id 
-                    WHERE f.ingredients LIKE '%".$filter."%' ORDER BY food ASC";
+                    WHERE f.ingredients LIKE '%".?."%' ORDER BY food ASC");
             } 
             else if ($filter == 'fisch'){
-                $sql = "SELECT f.name as food,f.ingredients,f.price, r.name as restaurant 
+                $sql = $db->prepare("SELECT f.name as food,f.ingredients,f.price, r.name as restaurant
                     FROM food f JOIN restaurants r ON restID = r.id 
-                    WHERE f.name LIKE '%".$filter."%' OR f.ingredients LIKE '%Lachs%' 
-                    OR f.ingredients LIKE '%Brasse%' ORDER BY food ASC";
+                    WHERE f.name LIKE '%".?."%' OR f.ingredients LIKE '%Lachs%'
+                    OR f.ingredients LIKE '%Brasse%' ORDER BY food ASC");
             }
             else {
-                $sql = "SELECT f.name as food,f.ingredients,f.price, r.name as restaurant 
+                $sql = $db->prepare("SELECT f.name as food,f.ingredients,f.price, r.name as restaurant
                     FROM food f JOIN restaurants r ON restID = r.id 
-                    WHERE f.name LIKE '%".$filter."%' ORDER BY food ASC";
+                    WHERE f.name LIKE '%".?."%' ORDER BY food ASC");
             }          
-            
-            $stmt = $db->query($sql);
-            $menus = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+            $sql->bind_param("s", $filter);
+            $result = $sql->get_result();
+            $menus = $result->fetchAll(PDO::FETCH_OBJ);
     
             //JSON Response
             return $response->withJson($menus);
@@ -208,11 +209,11 @@ $app->get('/api/fellini/{filter}', function(Request $request, Response $response
             }
     
             //create sql string
-            $sql = "SELECT name,ingredients,price FROM food WHERE restID='5b2e2671aa5ad' AND name LIKE '%".$filter."%'";
-                    
-            $stmt = $db->query($sql);
-            $menus = $stmt->fetchAll(PDO::FETCH_OBJ);
-    
+            $sql = $db->prepare("SELECT name,ingredients,price FROM food WHERE restID='5b2e2671aa5ad' AND name LIKE '%".?."%'");
+            $sql->bind_param("s", $filter);
+            $result = $sql->get_result();
+            $menus = $result->fetchAll(PDO::FETCH_OBJ);
+
             //JSON Response
             return $response->withJson($menus);
     
@@ -265,10 +266,10 @@ $app->get('/api/roma/{filter}', function(Request $request, Response $response, a
             }
     
             //create sql string
-            $sql = "SELECT name,ingredients,price FROM food WHERE restID='5b2f8ff4aa793' AND name LIKE '%".$filter."%'";
-                    
-            $stmt = $db->query($sql);
-            $menus = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $sql = $dp->prepare("SELECT name,ingredients,price FROM food WHERE restID='5b2f8ff4aa793' AND name LIKE '%".?."%'");
+            $sql->bind_param("s", $filter);
+            $result = $sql->get_result();
+            $menus = $result->fetchAll(PDO::FETCH_OBJ);
     
             //JSON Response
             return $response->withJson($menus);
@@ -322,11 +323,11 @@ $app->get('/api/montraw/{filter}', function(Request $request, Response $response
             }
     
             //create sql string
-            $sql = "SELECT name,ingredients,price FROM food WHERE restID='5b30b11fb5fe5' AND name LIKE '%".$filter."%'";
-                    
-            $stmt = $db->query($sql);
-            $menus = $stmt->fetchAll(PDO::FETCH_OBJ);
-    
+            $sql = $db->prepare("SELECT name,ingredients,price FROM food WHERE restID='5b30b11fb5fe5' AND name LIKE '%".?."%'");
+            $sql->bind_param("s", $filter);
+            $result = $sql->get_result();
+            $menus = $result->fetchAll(PDO::FETCH_OBJ);
+
             //JSON Response
             return $response->withJson($menus);
     
